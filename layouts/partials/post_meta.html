@@ -12,11 +12,19 @@
 {{- $scratch.Add "meta" (slice (i18n "words" .WordCount | default (printf "%d words" .WordCount))) }}
 {{- end }}
 
+{{- $author := (partial "author.html" .) }}
+{{- $tags := (partial "tagslist.html" .) }}
 {{- if not (.Param "hideAuthor") -}}
-{{- with (partial "author.html" .) }}
-{{- $scratch.Add "meta" (slice .) }}
-{{- end }}
-{{- end }}
+    {{- if $tags }}
+        {{- $scratch.Add "meta" (slice $author $tags) -}}
+    {{- else}}
+        {{- $scratch.Add "meta" (slice $author) -}}
+    {{- end}}
+{{- else}}
+    {{- if $tags }}
+        {{- $scratch.Add "meta" (slice $tags) -}}
+    {{- end}}
+{{- end}}
 
 {{- with ($scratch.Get "meta") }}
 {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}

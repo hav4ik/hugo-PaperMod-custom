@@ -1,0 +1,181 @@
+.about-container {
+    display: flex;
+    margin: calc(var(--gap) * 2) 0 calc(var(--gap) * 1) 0;
+    flex-direction: row;
+}
+
+.about-section {
+}
+
+/* Entry-left class to position cover image on the left */
+.about-left {
+    max-width: 30%;
+    margin-right: var(--gap);
+    flex-shrink: 0;
+    object-position: top;
+}
+
+.about-left img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    object-fit: cover;
+}
+
+/* Entry-right class to hold the rest of the content */
+.about-right {
+    flex-grow: 1;
+}
+
+/* Reset the original .entry-cover styles for the new structure */
+.about-container .entry-cover {
+    font-size: 14px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.about-container .entry-cover img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    object-fit: cover;
+}
+
+/* Mobile layout adjustments */
+/* 768px is --main-width + 2 * --gap, defined in theme-vars.css; */
+/* We can't do "calc(...)" here, so this had to be set manually */
+@media (max-width: 768px)
+{
+    .about-container {
+        flex-direction: column;
+    }
+    
+    .about-left {
+        margin-bottom: calc(2 * var(--gap));
+        max-width: 256px;
+        object-fit: cover;
+        /* center the content horizontally */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .about-avt-mobile-center-crop {
+        object-position: center;
+    }
+    .about-avt-mobile-top-crop {
+        object-position: top;
+    }
+
+    .about-left img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius);
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+    }
+    
+    .about-right {
+        margin: 0;
+    }
+}
+
+
+.timeline-container {
+    --timeline-logo-radius: 30px;
+    --timeline-logo-offset: 10px;
+    --timeline-border: 5px;
+
+    margin: 0;
+    padding: 10px 0;
+}
+
+/* Timeline */
+#timeline {
+    font-size: 20px;
+}
+
+.timelineitem {
+    color: var(--primary);
+    border-left: var(--timeline-border) solid var(--primary);
+    text-align: left;
+    padding-left: calc(var(--timeline-logo-radius) + var(--timeline-logo-offset) + var(--timeline-border));
+    margin-left: calc(var(--timeline-logo-radius) + var(--timeline-logo-offset));
+}
+.timelineitem .timelinelogo {
+    left: calc((var(--timeline-border) / 2) - (var(--timeline-logo-radius) + var(--timeline-border)));
+}
+
+.timelineitem {
+    position: relative;
+    padding-top: 0px;
+    padding-bottom: var(--timeline-logo-radius);
+}
+
+.timelineitem:last-child {
+    margin-left: calc(var(--timeline-logo-radius) + var(--timeline-logo-offset) + var(--timeline-border));
+    padding-bottom: 0px;
+    border: none;
+}
+
+.timelineitem:before {
+    left: -8px;
+}
+
+.timelinelogo {
+    width: calc(var(--timeline-logo-radius) * 2);
+    height: calc(var(--timeline-logo-radius) * 2);
+    display: block;
+    position: absolute;
+    background-color: var(--theme);
+    top: 0;
+    border-radius: 30px;
+    text-align: center;
+    border: 2px solid var(--primary);
+}
+.timelinelogo img {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    display: block;
+    vertical-align: middle;
+    transform: translate(-50%, -50%);
+}
+/* .timelineitem:before {
+    content: "";
+    width: 11px;
+    height: 11px;
+    background: #333;
+    display: block;
+    position: absolute;
+    top: 0;
+    border-radius: 5px;
+}
+*/
+
+.tdate {
+    font-size: 16px;
+    margin-bottom: -5px;
+}
+.ttitle {
+    font-size: 16px;
+    font-weight: bold;
+}
+.tdesc {
+    font-size: 16px;
+}
+@media (max-width: 768px) {
+    .tdate {
+        font-size: 16px;
+   }
+    .ttitle {
+        font-size: 16px;
+        font-weight: bold;
+   }
+    .tdesc {
+        font-size: 16px;
+   }
+}
+
+.about-md-content > ul > li {
+    margin-bottom: 1rem;
+}

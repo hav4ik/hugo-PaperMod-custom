@@ -27,6 +27,17 @@
   {{- end }}
 </header>
 
+<ul class="terms-tags">
+  {{range $name, $taxonomy := .Site.Taxonomies.tags}}
+  {{ $cnt := .Count }}
+  {{ with $.Site.GetPage (printf "/tags/%s" $name) }}
+  <li>
+      <a href="{{ .RelPermalink }}">{{ $name }} <sup><strong><sup>{{ $cnt }}</sup></strong></sup> </a>
+  </li>
+  {{- end }}
+  {{- end }}
+</ul>
+
 {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
 
 {{- if site.Params.ShowAllPagesInArchive }}

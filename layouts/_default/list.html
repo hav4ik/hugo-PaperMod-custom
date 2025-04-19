@@ -60,12 +60,15 @@
 {{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) (not $user_preferred)) }}
 {{- $class = "first-entry" }}
 {{- else if $term }}
-{{- $class = "post-entry tag-entry" }}
+{{- $class = "post-entry" }}
 {{- end }}
 
-<article class="{{ $class }}">
+<article class="{{ $class }} entry-container">
+  <div class="entry-left">
   {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
+  </div>
+  <div class="entry-right">
   <header class="entry-header">
     <h2 class="entry-hint-parent">
       {{- .Title }}
@@ -90,6 +93,7 @@
   </footer>
   {{- end }}
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+  </div><!-- entry-right -->
 </article>
 {{- end }}
 

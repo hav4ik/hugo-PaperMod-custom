@@ -149,6 +149,10 @@
     margin: auto 0;
 }
 
+.post-content .highlight a {
+    color: unset !important;
+}
+
 .post-content .highlight table {
     border-radius: var(--radius);
 }
@@ -242,14 +246,15 @@
 .post-content figure > figcaption {
     color: var(--primary);
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
     margin: 8px 0 16px;
 }
 
 .post-content figure > figcaption > p {
     color: var(--secondary);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: normal;
+    font-style: italic;
 }
 
 .toc {

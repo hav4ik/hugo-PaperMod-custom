@@ -19,13 +19,20 @@
       {{ .Description }}
     </div>
     {{- end }}
+
     {{- if not (.Param "hideMeta") }}
-    <div class="post-meta">
+    <div class="post-meta meta-info-line">
       {{- partial "post_meta.html" . -}}
       {{- partial "translation_list.html" . -}}
       {{- partial "edit_post.html" . -}}
       {{- partial "post_canonical.html" . -}}
     </div>
+    {{- end }}{{/* end hideMeta */}}
+
+    {{- if (.Param "summary") }}
+      <div class="summary-display">
+      <p><i>{{- .Param "summary" | markdownify | safeHTML }}</i></p>
+      </div>
     {{- end }}
   </header>
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}

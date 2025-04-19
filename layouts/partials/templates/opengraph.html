@@ -16,7 +16,7 @@
   <meta property="og:locale" content="{{ . }}">
 {{- end }}
 
-{{- if .IsPage }}
+{{- if and (.IsPage) (ne .Layout `aboutauthor` ) }}
   <meta property="og:type" content="article">
   {{- with .Section }}
     <meta property="article:section" content="{{ . }}">

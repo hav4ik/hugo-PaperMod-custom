@@ -1,0 +1,33 @@
+{{- $timeline := .Param "timeline" | default false }}
+{{- if $timeline }}
+<article class="about-section">
+    <div id="timeline">
+        {{- range $index, $exp := (.Param "timeline") }}
+        {{- with $exp }}
+        <div class="timelineitem">
+            {{- $imgSrc := .logoImg.src | default "" }}
+            {{- $logoStyle := .logoImg.logoStyle | default ""}}
+            {{- $imgStyle := .logoImg.imgStyle | default ""}}
+            <div class="timelinelogo" style="{{- $logoStyle | safeCSS }}">
+                <img src="{{ $imgSrc }}" style="{{- $imgStyle | safeCSS }}" />
+            </div>
+            <div class="timeline-content">
+                <div class="ttitle">
+                    {{- $timeWindow := .time | default "Time window is required (e.g. 'from 2019 to 2023')!" }}
+                    {{- $position := .position | default "" }}
+                    {{- $institution := .institution | default "" }}
+                    {{- $location := .location | default "" }}
+
+                    {{- if ne $timeWindow "" }}{{- $timeWindow | markdownify | safeHTML }}{{ ": " }}{{- end }}
+                    {{- if ne $position "" }}{{- $position | markdownify | safeHTML }}{{ " @ " }}{{- end }}
+                    {{- $institution | markdownify | safeHTML }}
+                    {{- if ne $location ""}}{{ ", " }}{{- $location | markdownify | safeHTML }}{{- end }}
+                </div>
+                <div class="tdesc post-content">{{ .description | markdownify | safeHTML }}</div>
+            </div>
+        </div>
+        {{- end}}
+        {{- end }}
+    </div>
+</article>
+{{- end }}

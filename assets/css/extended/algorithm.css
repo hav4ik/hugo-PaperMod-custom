@@ -1,0 +1,63 @@
+.algorithm {
+    padding: 10px;
+    margin: 20px 0;
+}
+.algorithm .algo-name {
+    font-weight: bold;
+    border-top: 1px solid var(--primary);
+    border-bottom: 1px solid var(--primary);
+    padding: 5px 0;
+    margin-bottom: 10px;
+}
+.algorithm .algo-input, .algorithm .algo-output, .algorithm .algo-body {
+    display: block;
+    padding: 5px;
+}
+.algorithm .algo-input::before, .algorithm .algo-output::before {
+    font-weight: bold;
+}
+.algorithm .algo-input::before {
+    content: "Input: ";
+}
+.algorithm .algo-output::before {
+    content: "Output: ";
+}
+.algorithm .algo-emph {
+    font-weight: bold;
+}
+.algorithm .algo-code-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 3px;
+}
+.algorithm .algo-code-line > .code {
+    flex: 1;
+    margin-right: 2em;
+}
+.algorithm .algo-code-line > .comment {
+    color: #777;
+    flex-basis: 200px;
+    text-align: right;
+}
+.algorithm .algo-indent-block {
+    padding-left: 2em;
+    position: relative;
+}
+.algorithm .algo-indent-block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 5px;
+    border-left: 2px dotted var(--secondary);
+}
+.algorithm .algo-indent-block > .algo-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.algorithm .algo-end {
+    margin-top: 10px;
+    border-bottom: 1px solid var(--primary);
+}

@@ -5,20 +5,35 @@
     {{- if .Get "link" -}}
         <a href="{{ .Get "link" }}"{{ with .Get "target" }} target="{{ . }}"{{ end }}{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
     {{- end }}
-    <img loading="lazy" src="{{ .Get "src" }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
-         {{- if or (.Get "alt") (.Get "caption") }}
-         alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}"
+    {{- $figObj := . }}
+    {{- $imgClass := cond (ge (len (split (.Get "src") ",")) 2) "half" "" }}
+
+    {{- if ne $imgClass "" }}<div class="fig-multi-image-container">{{ end }}
+    {{- range $src := split (.Get "src") "," -}}
+    <img loading="lazy" src="{{ $src }}{{- if eq ($figObj.Get "align") "center" }}#center{{- end }}"
+         class="{{ $imgClass }}"
+         {{- if or ($figObj.Get "alt") ($figObj.Get "caption") }}
+         alt="{{ with $figObj.Get "alt" }}{{ . }}{{ else }}{{ $figObj.Get "caption" | markdownify| plainify }}{{ end }}"
          {{- end -}}
-         {{- with .Get "width" }} width="{{ . }}"{{ end -}}
-         {{- with .Get "height" }} height="{{ . }}"{{ end -}}
+         {{- with $figObj.Get "width" }} width="{{ . }}"{{ end -}}
+         {{- with $figObj.Get "height" }} height="{{ . }}"{{ end -}}
+         {{- $styleStr := cond (eq ($figObj.Get "invertible") "true") "filter: var(--c-img-filter);" "" }}
+         {{- $styleStr := cond (ne ($figObj.Get "addbackground") "") (printf "%s background-color: %s;" $styleStr ($figObj.Get "addbackground")) $styleStr }}
+         {{- if $styleStr }} style="{{ $styleStr | safeHTML | safeCSS }}"{{ end }}
     /> <!-- Closing img tag -->
+    {{- end }}{{/* End range */}}
+    {{- if ne $imgClass "" }}</div>{{ end }}
+
     {{- if .Get "link" }}</a>{{ end -}}
     {{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
+        {{ $figCount := add ($.Page.Scratch.Get "figCount" | default 0) 1 }}
+        {{ $.Page.Scratch.Set "figCount" $figCount }}
         <figcaption>
             {{ with (.Get "title") -}}
                 {{ . }}
             {{- end -}}
             {{- if or (.Get "caption") (.Get "attr") -}}<p>
+                Fig {{ $figCount }}: {{- " " -}}
                 {{- .Get "caption" | markdownify -}}
                 {{- with .Get "attrlink" }}
                     <a href="{{ . }}">

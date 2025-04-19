@@ -31,20 +31,24 @@
     {{- if $cover -}}
         {{/* i.e it is present in page bundle */}}
         {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
-            <img loading="{{$loading}}"
-                srcset='{{- range $size := $sizes -}}
-                            {{- if (ge $cover.Width $size) }}
-                                {{- printf "%s %s" (($cover.Resize (printf "%sx" $size)).Permalink) (printf "%sw," $size) }}
-                            {{- end }}
-                        {{- end }}
-                        {{- printf "%s %dw" ($cover.Permalink) ($cover.Width) }}'
-                src="{{ $cover.Permalink }}"
-                sizes="(min-width: 768px) 720px, 100vw"
-                width="{{ $cover.Width }}" height="{{ $cover.Height }}"
-                alt="{{ $alt }}">
+            {{- $coverWidth := cast.ToInt $cover.Width }}
+            {{- $coverHeight := cast.ToInt $cover.Height }}
+            {{- $cropVertically := ge $cover.Width (math.Div (math.Mul $cover.Height 3) 2) }}
+            {{- $coverCroppedVertically := $cover.Process (printf "crop %dx%d center" (math.Div (math.Mul $coverHeight 3) 2) $coverHeight) }}
+            {{- $coverCroppedHorizontally := $cover.Process (printf "crop %dx%d center" $coverWidth (math.Div (math.Mul $coverWidth 2) 3)) }}
+            {{- $coverCrop := cond $cropVertically $coverCroppedVertically $coverCroppedHorizontally }}
+            <img loading="{{$loading}}" srcset="{{- range $size := $sizes -}}
+                    {{- if (ge $coverCrop.Width $size) -}}
+                        {{- $imageResized := $coverCrop.Process (printf "resize %sx" $size ) }}
+                        {{ printf "%s %s" ($imageResized.Permalink) (printf "%sw ," $size) -}}
+                    {{ end }}
+                    {{- end -}} {{printf "%dw" ($coverCrop.Width)}}" 
+                sizes="(min-width: 768px) 720px, 100vw" src="{{ $coverCrop.Permalink }}" alt="{{ $alt }}" 
+                width="{{ $coverCrop.Width }}" height="{{ $coverCrop.Height }}">
         {{- else }}{{/* Unprocessable image or responsive images disabled */}}
-            <img loading="{{ $loading }}" src="{{ $imgdl }}" alt="{{ $alt }}">
+        <img loading="{{$loading}}" src="{{ (path.Join .RelPermalink .Params.cover.image) | absURL }}" alt="{{ $alt }}">
         {{- end }}
+
     {{- else }}
         {{- /* For absolute urls and external links, no img processing here */}}
         <img loading="{{ $loading }}" src="{{ $imgdl }}" alt="{{ $alt }}">

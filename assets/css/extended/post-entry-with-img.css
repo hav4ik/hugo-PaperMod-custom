@@ -1,0 +1,57 @@
+/* Container to hold entry-left and entry-right side by side */
+.entry-container {
+    display: flex;
+    flex-direction: row;
+    /* center the content vertically */
+}
+
+/* Entry-left class to position cover image on the left */
+.entry-left {
+    max-width: 30%;
+    margin-right: var(--gap);
+    flex-shrink: 0;
+}
+
+.entry-left img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    object-fit: cover;
+}
+
+/* Entry-right class to hold the rest of the content */
+.entry-right {
+    flex-grow: 1;
+}
+
+/* Reset the original .entry-cover styles for the new structure */
+.entry-container .entry-cover {
+    font-size: 14px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.entry-container .entry-cover img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    object-fit: cover;
+}
+
+/* Mobile layout adjustments */
+/* 768px is --main-width + 2 * --gap, defined in theme-vars.css; */
+/* We can't do "calc(...)" here, so this had to be set manually */
+@media (max-width: 768px)
+{
+    .entry-container {
+        flex-direction: column;
+    }
+    
+    .entry-left {
+        display: none;
+    }
+    
+    .entry-right {
+        margin: 0;
+    }
+}

@@ -3,3 +3,63 @@ This is just a placeholder blank stylesheet so as to support adding custom style
 
 Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-css-with-themes-assets for more info
 */
+
+.post-header .summary-display {
+    margin: 8px 0;
+    color: var(--secondary);
+    font-size: 16px;
+}
+
+.post-header .meta-info-line {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 2px dashed var(--tertiary);
+}
+
+.post-content img.half {
+    width: calc(50% - 2px);
+    margin: 1px;
+}
+
+@media (max-width: 768px) { /* Adjust the max-width value as needed */
+    .post-content img.half {
+        width: 100%;
+        float: none; /* Remove float to make the image take the full width */
+        margin-bottom: 5px;
+        margin-left: 0;
+        margin-right: 0;
+
+    }
+}
+
+.post-content > figure > .fig-multi-image-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.notations-table {
+    border-top: 2px solid #828282;
+    border-bottom: 2px solid #828282;
+}
+.notations-table tr {
+    border-top: 0px;
+    border-bottom: 0px;
+    width: 100%;
+}
+.notations-table tr th {
+    text-align: left;
+    border-bottom: 2px solid #828282;
+    border-left: none;
+    border-right: none;
+}
+.notations-table tr td {
+    text-align: left;
+    border-bottom: 1px solid #e8e8e8;
+    border-left: none;
+    border-right: none;
+}
+
+.notations-table .notations-desc {
+    width: 100%;
+}
